@@ -1,0 +1,52 @@
+create database GIET;
+use GIET;
+create table giet(
+Roll_no integer primary key,
+Name varchar(50) not null,
+Address varchar(100) not null,
+Desig varchar(50) not null,
+Salary integer,
+Gender char);
+
+#Task 1
+select * from giet;
+select Name from giet;
+select Name, Address from giet;
+select Roll_no, Address from giet;
+select * from giet where Name="aman";
+select * from giet where Address="delhi";
+select * from giet where Gender="M";
+select * from giet where Desig="doctor";
+select * from giet where Salary=15000;
+select * from giet where Salary>20000;
+select * from giet where Gender="M" and Salary>20000;
+select * from giet where Gender="F" or Address="raipur";
+select * from giet where Name like 'a%';
+select * from giet where Name like '%h';
+select * from giet where Address like '%pur%';
+select * from giet order by Name asc;
+select * from giet order by Salary desc;
+select count(*) from giet;
+select count(*) from giet where Gender="M";
+
+#Task 2
+select * from giet where Salary between 15000 and 30000;
+select * from giet where Address != 'delhi';
+select * from giet where Desig != 'teacher';
+select * from giet where Name in ('aman', 'naman');
+select * from giet where Name like '%a%a%';
+select * from giet where Name like '_____';
+select * from giet where Address like 'r%';
+select * from giet order by Salary desc limit 3;
+select * from giet where Salary = (select min(Salary) from giet);
+select sum(Salary) as total_salary from giet where Gender = 'M';
+select avg(Salary) as avg_salary from giet where Gender = 'F';
+select count(*) as count_employees from giet where Salary > 20000;
+select Desig, count(*) as total_employees from giet group by Desig;
+select Gender, avg(Salary) as avg_salary from giet group by Gender;
+select Address, sum(Salary) as total_salary from giet group by Address;
+select Desig, avg(Salary) as avg_salary from giet group by Desig having avg(Salary) > 20000;
+select Address, count(*) as total_employees from giet group by Address having count(*) > 1;
+select * from giet where Salary > (select avg(Salary) from giet);
+select * from giet where Salary = (select max(Salary) from giet);
+select * from giet where Salary = (select min(Salary) from giet);
