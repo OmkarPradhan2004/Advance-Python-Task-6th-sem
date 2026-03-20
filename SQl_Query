@@ -1,5 +1,5 @@
-create database GIET;
-use GIET;
+create database ADV_PY;
+use ADV_PY;
 create table giet(
 Roll_no integer primary key,
 Name varchar(50) not null,
@@ -50,3 +50,25 @@ select Address, count(*) as total_employees from giet group by Address having co
 select * from giet where Salary > (select avg(Salary) from giet);
 select * from giet where Salary = (select max(Salary) from giet);
 select * from giet where Salary = (select min(Salary) from giet);
+
+#Task 3
+select max(Salary) from giet where Salary < (select max(Salary) from giet);
+select max(Salary) from giet where Salary < (select max(Salary) from giet where Salary < (select max(Salary) from giet));
+select * from giet where Salary = (select max(Salary) from giet where Salary < (select max(Salary) from giet));
+select * from giet g1 where Salary > (select avg(Salary) from giet g2 where g2.Address = g1.Address);
+select * from giet where Salary in (select Salary from giet group by Salary having count(*) > 1);
+select * from giet where Salary in (select Salary from giet group by Salary having count(*) = 1);
+select Desig, max(Salary) as highest_salary from giet group by Desig;
+select Desig, max(Salary) as second_highest from giet where Salary < (select max(Salary) from giet) group by Desig;
+select * from giet g1 where Salary > (select avg(Salary) from giet g2 where g2.Desig = g1.Desig);
+select sum(Salary) as top3_total from (select Salary from giet order by Salary desc limit 3) as top3;
+select * from giet where Address in (select Address from giet group by Address having count(*) = 1);
+select Desig from giet group by Desig order by count(*) desc limit 1;
+select Address from giet group by Address order by sum(Salary) desc limit 1;
+select * from giet g1 where exists (select 1 from giet g2 where g2.Desig = g1.Desig and g2.Salary = g1.Salary and g2.Roll_no != g1.Roll_no);
+select * from giet where Salary > all (select Salary from giet where Address = 'delhi');
+update giet set Salary = Salary * 1.10 where Salary < (select avg_sal from (select avg(Salary) as avg_sal from giet) as temp);
+delete from giet where Salary < (select min_sal from (select min(Salary) as min_sal from giet where Desig = 'doctor') as temp);
+create view high_salary_employees as select * from giet where Salary > 20000;
+create view city_salary_summary as select Address, count(*) as total_employees, sum(Salary) as total_salary from giet group by Address;
+select Name, Salary, rank() over (order by Salary desc) as salary_rank from giet;
