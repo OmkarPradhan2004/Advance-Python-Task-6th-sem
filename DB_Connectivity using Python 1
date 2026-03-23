@@ -1,0 +1,36 @@
+import mysql.connector
+conn=mysql.connector.connect(
+    user="root",
+    password="2004",
+    host="localhost",
+    port=3306,
+    database="COMPANY"
+)
+
+if conn.is_connected():
+    print("Connected")
+
+cur=conn.cursor()
+cur.execute("USE COMPANY;")
+cur.execute("SELECT * FROM EMPLOYEE")
+cur.execute("SELECT Name FROM EMPLOYEE")
+cur.execute("SELECT Name, Address FROM EMPLOYEE")
+cur.execute("SELECT Roll_no, Address FROM EMPLOYEE")
+cur.execute('SELECT * FROM EMPLOYEE WHERE Name="aman"')
+cur.execute('SELECT * FROM EMPLOYEE WHERE Address="delhi"')
+cur.execute('SELECT * FROM EMPLOYEE WHERE Gender="M"')
+cur.execute('SELECT * FROM EMPLOYEE WHERE Desig="doctor"')
+cur.execute("SELECT * FROM EMPLOYEE WHERE Salary=15000")
+cur.execute("SELECT * FROM EMPLOYEE WHERE Salary>20000")
+cur.execute('SELECT * FROM EMPLOYEE WHERE Gender="M" AND Salary>20000')
+cur.execute('SELECT * FROM EMPLOYEE WHERE Gender="F" OR Address="raipur"')
+cur.execute("SELECT * FROM EMPLOYEE WHERE Name LIKE 'a%'")
+cur.execute("SELECT * FROM EMPLOYEE WHERE Name LIKE '%h'")
+cur.execute("SELECT * FROM EMPLOYEE WHERE Address LIKE '%pur%'")
+cur.execute("SELECT * FROM EMPLOYEE ORDER BY Name ASC")
+cur.execute("SELECT * FROM EMPLOYEE ORDER BY Salary DESC")
+cur.execute("SELECT COUNT(*) FROM EMPLOYEE")
+cur.execute('SELECT COUNT(*) FROM EMPLOYEE WHERE Gender="M"')
+
+cur.close()
+conn.close()
